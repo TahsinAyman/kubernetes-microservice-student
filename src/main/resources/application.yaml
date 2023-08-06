@@ -1,10 +1,60 @@
 spring:
+  profiles:
+    active: dev
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://0.0.0.0:3333/student
     username: root
     password: root
-    url: jdbc:mysql://192.168.0.122:3333/student
+server:
+  port: 8002
+microservice:
+  school: http://localhost:8001
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/school
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+microservice:
+  school: ${SCHOOL_URL}
+server:
+  port: 8080
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:student
+    username: sa
+    password:
+microservice:
+  school:
+
+
+# mvn test -Dspring.profiles.active=test
+# mvn clean install -DskipTests -Dspring.profiles.active=prod

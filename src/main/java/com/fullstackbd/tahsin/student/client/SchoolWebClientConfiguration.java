@@ -1,5 +1,6 @@
 package com.fullstackbd.tahsin.student.client;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,11 +9,14 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
 public class SchoolWebClientConfiguration {
+
+    @Value("${microservice.school}")
+    private String SCHOOL_URL;
     @Bean
     public WebClient schoolWebClient() {
         return WebClient
                 .builder()
-                .baseUrl("http://school-service:8080")
+                .baseUrl(SCHOOL_URL)
                 .build();
     }
     @Bean

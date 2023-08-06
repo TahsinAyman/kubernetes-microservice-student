@@ -5,7 +5,8 @@ metadata:
 spec:
   selector:
     app: student-deployment
+  type: LoadBalancer
   ports:
-    - port: 8080
+    - port: 8002
       targetPort: 8080
       protocol: TCP
