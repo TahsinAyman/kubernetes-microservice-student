@@ -30,7 +30,7 @@ spring:
     show-sql: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/school
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/student
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 microservice:
