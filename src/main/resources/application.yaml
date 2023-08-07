@@ -1,8 +1,13 @@
 spring:
   profiles:
     active: dev
+  kafka:
+    consumer:
+      group-id: student-consumer
 ---
 spring:
+  kafka:
+    bootstrap-servers: localhost:9092
   config:
     activate:
       on-profile: dev
@@ -12,7 +17,7 @@ spring:
     show-sql: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://0.0.0.0:3333/student
+    url: jdbc:mysql://localhost:3333/student
     username: root
     password: root
 server:
@@ -21,6 +26,8 @@ microservice:
   school: http://localhost:8001
 ---
 spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT}
   config:
     activate:
       on-profile: prod
@@ -56,5 +63,5 @@ microservice:
   school:
 
 
-# mvn test -Dspring.profiles.active=test
-# mvn clean install -DskipTests -Dspring.profiles.active=prod
+## mvn test -Dspring.profiles.active=test
+## mvn clean install -DskipTests -Dspring.profiles.active=prod

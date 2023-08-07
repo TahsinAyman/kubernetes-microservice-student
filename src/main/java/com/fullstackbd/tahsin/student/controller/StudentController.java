@@ -40,33 +40,38 @@ public class StudentController {
         );
     }
 
+//    @PostMapping
+//    public ResponseEntity<?> save(@RequestBody Student student){
+//        Student savedStudent = null;
+//        try {
+//            savedStudent = service.save(student);
+//        } catch (ConnectException e) {
+//            System.out.println(e);
+//            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(
+//                Message
+//                        .builder()
+//                        .message("Service Unavailable")
+//                        .result(false)
+//                        .statusCode(HttpStatus.SERVICE_UNAVAILABLE.value())
+//                        .build()
+//            );
+//        }
+//        if (savedStudent != null) {
+//            return ResponseEntity.status(HttpStatus.CREATED).body(savedStudent);
+//        }
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+//                Message
+//                        .builder()
+//                        .message("School not found")
+//                        .result(false)
+//                        .statusCode(HttpStatus.NOT_FOUND.value())
+//                        .build()
+//        );
+//    }
+
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Student student){
-        Student savedStudent = null;
-        try {
-            savedStudent = service.save(student);
-        } catch (ConnectException e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(
-                Message
-                        .builder()
-                        .message("Service Unavailable")
-                        .result(false)
-                        .statusCode(HttpStatus.SERVICE_UNAVAILABLE.value())
-                        .build()
-            );
-        }
-        if (savedStudent != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedStudent);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                Message
-                        .builder()
-                        .message("School not found")
-                        .result(false)
-                        .statusCode(HttpStatus.NOT_FOUND.value())
-                        .build()
-        );
+    public Student save(@RequestBody Student student){
+        return service.save(student);
     }
 
     @GetMapping("/school/{id}")

@@ -1,5 +1,6 @@
 package com.fullstackbd.tahsin.student.service;
 
+import com.fullstackbd.tahsin.common.events.SchoolExistenceCheckEvent;
 import com.fullstackbd.tahsin.student.client.SchoolClient;
 import com.fullstackbd.tahsin.student.entity.Student;
 import com.fullstackbd.tahsin.student.repository.StudentRepository;
@@ -16,6 +17,8 @@ public class StudentServiceImplementation implements StudentService {
     private StudentRepository repository;
     @Autowired
     private SchoolClient schoolClient;
+    @Autowired
+    private SchoolExistenceCheckProducer schoolExistenceCheckProducer;
 
     @Override
     public List<Student> findAll() {
@@ -27,17 +30,30 @@ public class StudentServiceImplementation implements StudentService {
         return repository.findById(id).orElse(null);
     }
 
+//    @Override
+//    public Student save(Student student) throws ConnectException {
+//        try {
+//            schoolClient.findById(student.getSchoolId());
+//            return repository.save(student);
+//        } catch (WebClientResponseException e) {
+//            return null;
+//        } catch (Exception e) {
+//            throw new ConnectException("Service Unavailable");
+//        }
+//    }
     @Override
-    public Student save(Student student) throws ConnectException {
-        try {
-            schoolClient.findById(student.getSchoolId());
-            return repository.save(student);
-        } catch (WebClientResponseException e) {
-            return null;
-        } catch (Exception e) {
-            throw new ConnectException("Service Unavailable");
-        }
+    public Student save(Student student) {
+        Student savedStudent = repository.save(student);
+        schoolExistenceCheckProducer.produce(
+                SchoolExistenceCheckEvent
+                        .builder()
+                        .studentId(savedStudent.getId())
+                        .schoolId(savedStudent.getSchoolId())
+                        .build()
+        );
+        return savedStudent;
     }
+
 
     @Override
     public Student save(Long id, Student student) {

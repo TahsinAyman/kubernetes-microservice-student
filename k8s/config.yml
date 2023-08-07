@@ -8,3 +8,5 @@ data:
   DB_PORT: "3333"
   DB_USERNAME: "root"
   DB_PASSWORD: "root"
+  KAFKA_HOST: "192.168.0.122"
+  KAFKA_PORT: "9092"
