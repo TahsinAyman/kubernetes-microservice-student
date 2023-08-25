@@ -17,8 +17,8 @@ spec:
           image: tahsinayman/kubernetes-microservice-student:latest
           resources:
             limits:
-              cpu: "200m"
-              memory: "200Mi"
+              cpu: "500m"
+              memory: "500Mi"
           envFrom:
             - configMapRef:
                 name: student-configmap
